@@ -1,0 +1,42 @@
+# python src/scripts/shot_dependence.py source_dataset="MNIST" mapped_dataset="USPS" fine_tune_dataset="FMNIST" load_epoch=200 train_time_point=8
+
+# python src/scripts/shot_dependence.py source_dataset="MNIST" mapped_dataset="USPS" fine_tune_dataset=KMNIST load_epoch=200 train_time_point=3
+defaults:
+  - default.yaml
+  - _self_
+  - local: default.yaml
+  - override hydra/launcher: joblib
+
+source_dataset: "EMNIST"
+mapped_dataset: "FMNIST"
+fine_tune_dataset: "MNIST" # tune
+load_epoch: 130
+train_time_point: 0
+device: ??
+
+max_iteration: 4000
+num_shot_list: [5, 20, 100, 500]
+freeze_layers: false
+re_fine_tune: True
+repeat_times: 5
+# We select a time point to compare the accuracy
+# between transfer learning and training from scratch.
+
+time_segment: 11
+
+img_size: 32
+batch_size: 64
+
+work_dir: ${hydra:runtime.cwd}
+interp_classifier_path: ${work_dir}/logs/interp_classifier/${source_dataset}2${mapped_dataset}_epoch${load_epoch}_
+
+hydra:
+  run:
+    dir: logs/ablation_study/shot_dependency/freeze_layers_${freeze_layers}
+  sweep:
+    dir: logs/ablation_study/shot_dependency
+    subdir: freeze_layers_${freeze_layers}
+
+  launcher:
+    # override the number of jobs for joblib
+    n_jobs: 4

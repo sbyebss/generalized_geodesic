@@ -1,0 +1,18 @@
+# @package _global_
+
+defaults:
+  - override /mode: exp.yaml
+  - override /model: vtab_model.yaml
+  - override /datamodule: vtab_datamodule.yaml
+  - override /callbacks: vtab_callbacks.yaml
+  - override /logger: null
+
+name: ??
+
+trainer:
+  max_epochs: 100
+
+logger:
+  wandb:
+    group: "vtab_emb"
+    tags: ["debug"]

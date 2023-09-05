@@ -1,0 +1,18 @@
+# @package _global_
+
+defaults:
+  - override /mode: exp.yaml
+  - override /model: digits_model.yaml
+  - override /datamodule: fewshot_nist_datamodule.yaml
+  - override /callbacks: img_callbacks.yaml
+  - override /logger: null
+
+name: "mnist_usps"
+
+trainer:
+  max_epochs: 50
+
+logger:
+  wandb:
+    group: "nist"
+    tags: ["debug"]

@@ -1,0 +1,19 @@
+# @package _global_
+
+experiment_mode: False
+
+# allows for custom naming of the experiment
+name: ???
+
+skip_train: True
+test_after_training: True
+
+hydra:
+  # sets output paths for all file logs to `logs/experiment/name'
+  run:
+    dir: logs/test/${name}/${datamodule.source.dataset}/${datamodule.target.dataset}
+  sweep:
+    dir: logs/test/${name}/${datamodule.source.dataset}
+    subdir: ${datamodule.target.dataset}
+
+checkpoint_path: ${work_dir}/logs/paper/${name}/${datamodule.source.dataset}/${datamodule.target.dataset}/${callbacks.w2_table.method}/seed${seed}/checkpoints/last.ckpt

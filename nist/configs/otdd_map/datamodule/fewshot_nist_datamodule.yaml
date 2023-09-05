@@ -1,0 +1,8 @@
+defaults:
+  - nist_datamodule
+
+# TODO: rename this file to be nist dataset
+_target_: src.datamodules.digits_datamodule.FewShotKnnNIST
+
+num_shot: 5
+knn_data_path: ${work_dir}/data/knn_results/${datamodule.source.dataset}_seed${seed}_${datamodule.num_shot}shot.pt

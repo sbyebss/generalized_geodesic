@@ -1,0 +1,27 @@
+defaults:
+  - default.yaml
+  - _self_
+  - local: default.yaml
+  - override hydra/launcher: joblib
+
+source_dataset: "EMNIST"
+mapped_dataset: "MNISTM"
+fine_tune_dataset: ${mapped_dataset}
+load_epoch: 130
+methods: [otdd_map, mixup, barycenteric_map]
+# methods: [barycenteric_map]
+
+# seeds: [2, 3, 4, 5]
+train_iteration: 2000 # 7
+# train_iteration: 7
+
+hydra:
+  run:
+    dir: logs/insufficient/source_${source_dataset}_mapped_${mapped_dataset}
+  sweep:
+    dir: logs/insufficient
+    subdir: source_${source_dataset}_mapped_${mapped_dataset}
+
+  launcher:
+    # override the number of jobs for joblib
+    n_jobs: 4

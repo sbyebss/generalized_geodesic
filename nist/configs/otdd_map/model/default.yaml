@@ -1,0 +1,15 @@
+lr_T: 1.0e-4
+lr_f: 1.0e-4
+lr_l: 1.0e-3
+beta1: 0.5
+beta2: 0.999
+schedule_learning_rate: 0
+classifier_epoch: 25
+
+n_outer_iter: 1
+n_inner_iter: 2
+feat_cost_type: "mse_origin"
+coeff_feat: 0.01
+coeff_label: 0.1
+
+ema: false

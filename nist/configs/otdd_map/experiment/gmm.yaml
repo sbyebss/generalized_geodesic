@@ -1,0 +1,18 @@
+# @package _global_
+
+defaults:
+  - override /mode: exp.yaml
+  - override /model: gmm_model.yaml
+  - override /datamodule: gmm_datamodule.yaml
+  - override /callbacks: gmm_callbacks.yaml
+  - override /logger: null
+
+name: "gmm"
+
+trainer:
+  max_epochs: 10
+
+logger:
+  wandb:
+    group: "gmm"
+    tags: ["debug"]

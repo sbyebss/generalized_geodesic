@@ -1,0 +1,35 @@
+_target_: src.datamodules.digits_datamodule.NIST
+
+dl:
+  batch_size: ??
+  pin_memory: false
+  num_workers: 0
+
+source:
+  dataset: ??
+  path: ${data_dir}
+  image_size: ??
+  random_flip: ${datamodule.random_flip}
+target:
+  dataset: ??
+  path: ${data_dir}
+  image_size: ??
+  random_flip: ${datamodule.random_flip}
+
+channel: ??
+
+dim:
+  - ${datamodule.channel}
+  - ${datamodule.source.image_size}
+  - ${datamodule.source.image_size}
+
+random_flip: true
+logit_transform: false
+uniform_dequantization: false
+gaussian_dequantization: false
+rescaled: true
+extend_3channel: false
+image_mean:
+image_std:
+
+test_num_sample: 1000

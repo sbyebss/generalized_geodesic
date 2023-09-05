@@ -1,0 +1,15 @@
+_target_: src.datamodules.gmm_datamodule.GMMDataModule
+dims: 2
+n_train_samples: 60000
+raw_n_target_samples: 60000
+raw_n_source_samples: 60000
+
+num_gmm_source: 2
+num_gmm_target: 3
+batch_size: 1024
+num_workers: 0
+
+source:
+  dataset: gmm
+target:
+  dataset: gmm

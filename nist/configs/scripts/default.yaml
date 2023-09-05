@@ -1,0 +1,46 @@
+all_datasets: ["MNIST", "USPS", "FMNIST", "KMNIST", "EMNIST"]
+nist_datasets: ["MNIST", "USPS", "FMNIST", "KMNIST", "EMNIST", "MNISTM"]
+full_dataset: true
+
+img_size: 32
+batch_size: 50
+vtab_emb_dim: 768
+
+num_shot: 5
+lr: 0.005
+device: cuda:2
+
+nist_data_path: ${local.nist_data_path}
+vtab_data_path: ${local.vtab_data_path}
+work_dir: ${hydra:runtime.cwd}
+otdd_dir: ${work_dir}/data/otdd
+otdd_map_dir: ${work_dir}/logs/paper
+pretrained_classifier_path: ${work_dir}/data/pretrain_classifier
+
+coeff_feat: 0.01
+coeff_label: 0.1
+
+num_segment: 6
+# seeds: [1]
+seeds: [1, 2, 3, 4, 5]
+
+# (not using KMNIST because the learnt map of MNIST -> KMNIST wasn't good)
+fine_tune_dataset: "MNIST"
+train_datasets: ["EMNIST", "FMNIST", "USPS"]
+load_epochs: [50, 50, 50, 50]
+
+retrain: false
+auto_gpu: false
+# ----- Not use the below settings ---
+
+# fine_tune_dataset: "KMNIST"
+# train_datasets: ["MNIST", "FMNIST", "USPS"]
+# load_epochs: [100, 100, 100]
+
+logger:
+  _target_: src.logger.wandb_logger.WandbLogger
+  project: otdd_map
+  name: ${fine_tune_dataset}
+  save_dir: "."
+  offline: False # set True to store all logs only locally
+  log_model: False

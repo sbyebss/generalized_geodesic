@@ -1,0 +1,34 @@
+defaults:
+  - default.yaml
+  - _self_
+  - local: default.yaml
+  - override hydra/launcher: joblib
+
+source: MNIST
+target: USPS
+source_few_shot: true
+target_few_shot: false
+batch_size: 100
+seed: 1
+
+otdd_full_dataset_path: ${otdd_dir}/${source}_${target}_full.pt
+otdd_few_shot_path: ${otdd_dir}/${source}_${target}_seed${seed}_${num_shot}shot.pt
+otdd_flipped_path:
+  [
+    "${otdd_dir}/${target}_${source}_full.pt",
+    "${otdd_dir}/${target}_${source}_seed${seed}_${num_shot}shot.pt",
+  ]
+
+source_knn_data_path: ${work_dir}/data/knn_results/${source}_seed${seed}_${num_shot}shot.pt
+target_knn_data_path: ${work_dir}/data/knn_results/${target}_seed${seed}_${num_shot}shot.pt
+
+hydra:
+  run:
+    dir: logs/experiments/calculate_otdd
+  sweep:
+    dir: logs/experiments/calculate_otdd
+    subdir: ${hydra.job.num}
+
+  launcher:
+    # override the number of jobs for joblib
+    n_jobs: 8

@@ -1,0 +1,7 @@
+defaults:
+  - default.yaml
+
+visualization:
+  _target_: src.callbacks.gmm_callbacks.GMMCb
+  log_interval: 100
+  num_test_sample: 1024

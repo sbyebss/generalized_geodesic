@@ -1,0 +1,18 @@
+defaults:
+  - img_datamodule
+
+dl:
+  batch_size: 64
+  num_workers: 0
+
+source:
+  dataset: MNIST
+  image_size: 32
+  channel: 1
+
+target:
+  dataset: USPS
+  image_size: 32
+
+random_flip: false
+extend_3channel: true

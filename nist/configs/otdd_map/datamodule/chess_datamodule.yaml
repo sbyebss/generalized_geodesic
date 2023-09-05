@@ -1,0 +1,12 @@
+_target_: src.datamodules.gmm_datamodule.ChessboardDataModule
+dims: 2
+n_train_samples: 60000
+num_gmm_source: 16
+num_gmm_target: 16
+batch_size: 1024
+num_workers: 0
+
+source:
+  dataset: gmm
+target:
+  dataset: gmm

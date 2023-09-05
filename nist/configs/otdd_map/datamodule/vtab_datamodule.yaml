@@ -1,0 +1,10 @@
+_target_: src.datamodules.emb_vtab_datamodule.FewShotEmbVTAB
+
+source: DMLab
+target: Retinopathy
+
+batch_size: 128
+num_shot: 5
+
+vtab_data_path: ${data_dir}/vtab
+knn_data_path: ${work_dir}/data/knn_results/${datamodule.source}_seed${seed}_${datamodule.num_shot}shot.pt

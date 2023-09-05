@@ -1,0 +1,37 @@
+defaults:
+  - default.yaml
+  - _self_
+  - local: default.yaml
+  - classifier_net: spinalnet.yaml
+  - override hydra/launcher: joblib
+
+# batch_size: 50
+
+# Since EMNIST has much more data than others, we only train it for 2 epochs
+# to avoid overfitting.
+train_iters: ??
+# all_datasets: ["MNIST", "USPS", "FMNIST", "KMNIST", "EMNIST", "MNISTM"]
+all_datasets: ["DMLAB", "CIFAR100"]
+net_name: spinalnet
+few_shot: false
+
+# train_iters: [2000]
+# all_datasets: ["MNIST"]
+# few_shot: true
+lr: 0.005
+
+seed: 1
+
+classifier_path: ${work_dir}/data/pretrain_classifier/
+few_shot_classifier_path: ${work_dir}/data/few_shot_classifier/
+
+hydra:
+  run:
+    dir: logs/experiments/pretrain_classifier
+  sweep:
+    dir: logs/experiments
+    subdir: pretrain_classifier
+
+  launcher:
+    # override the number of jobs for joblib
+    n_jobs: 10

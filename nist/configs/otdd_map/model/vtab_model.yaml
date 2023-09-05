@@ -1,0 +1,31 @@
+defaults:
+  - default
+
+module:
+  _target_: src.models.vtab_model.EmbVtabModule
+
+vtab_emb_dim: 768
+T_net:
+  _target_: src.networks.mlp.ResFeatureGenerator
+  feat_dim: ${model.vtab_emb_dim}
+  hidden_dim: 1024
+  num_layer: 4
+
+f_net:
+  _target_: src.networks.mlp.ResDiscriminator
+  feat_dim: ${model.vtab_emb_dim}
+  hidden_dim: 1024
+  num_layer: 2
+
+classifier:
+  _target_: src.networks.classifier.SimpleMLP
+  input_dim: ${model.vtab_emb_dim}
+
+classifier_epoch: 1
+n_inner_iter: 10
+
+source: ${datamodule.source}
+target: ${datamodule.target}
+
+classifier_save_path: ${work_dir}/data/pretrain_classifier/${datamodule.target}.pt
+ema: True

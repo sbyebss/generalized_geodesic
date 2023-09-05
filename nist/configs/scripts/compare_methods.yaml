@@ -1,0 +1,25 @@
+defaults:
+  - default.yaml
+  - _self_
+  - local: default.yaml
+  - override hydra/launcher: joblib
+
+methods: [otdd_map, mixup, barycenteric_map]
+# methods: [mixup, barycenteric_map]
+# methods: [barycenteric_map]
+fine_tune_epoch: 2000 #1
+train_iteration: 10000 # 7
+train_batch_size: 64
+
+ds_type: NIST # or VTAB
+
+refine_tune: false
+
+hydra:
+  run:
+    dir: logs/compare_methods/${num_shot}_shot/Spinalnet_clsf/fine_tune_${fine_tune_dataset}/run
+  sweep:
+    dir: logs/compare_methods/${num_shot}_shot/Spinalnet_clsf/fine_tune_${fine_tune_dataset}
+    subdir: run
+  launcher:
+    n_jobs: 16

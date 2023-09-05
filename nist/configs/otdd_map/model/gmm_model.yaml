@@ -1,0 +1,36 @@
+defaults:
+  - default
+
+module:
+  _target_: src.models.gmm_model.GMMModule
+
+T_net:
+  _target_: src.networks.mlp.ResFeatureGenerator
+  feat_dim: 2
+  num_class: ${datamodule.num_gmm_source}
+  hidden_dim: 64
+  num_layer: 2
+
+classifier:
+  _target_: src.networks.mlp.ResClassifier
+  feat_dim: 2
+  num_class: ${datamodule.num_gmm_target}
+  hidden_dim: 64
+  num_layer: 4
+  fourier: True
+  fourier_freq: 1.0
+
+f_net:
+  _target_: src.networks.mlp.ResDiscriminator
+  feat_dim: 2
+  num_class: ${datamodule.num_gmm_target}
+  hidden_dim: 64
+  num_layer: 2
+
+classifier_epoch: 2
+n_inner_iter: 4
+
+num_source_class: ${datamodule.num_gmm_source}
+num_target_class: ${datamodule.num_gmm_target}
+
+classifier_save_path: ${work_dir}/data/pretrain_classifier/gmm_${datamodule.num_gmm_target}_resnet.pt

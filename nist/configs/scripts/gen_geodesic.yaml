@@ -1,0 +1,21 @@
+defaults:
+  - default.yaml
+  - _self_
+  - local: default.yaml
+  - override hydra/launcher: joblib
+
+method: barycenteric_map
+fine_tune_epoch: 100 #1
+train_iteration: 2000 # 7
+# fine_tune_epoch: 1
+# train_iteration: 7
+# seeds: [1]
+
+hydra:
+  run:
+    dir: logs/generalized_geodesic/fine_tune_${fine_tune_dataset}/${method}/run
+  sweep:
+    dir: logs/generalized_geodesic/fine_tune_${fine_tune_dataset}/${method}
+    subdir: run
+  launcher:
+    n_jobs: 4

@@ -1,0 +1,24 @@
+defaults:
+  - default.yaml
+  - _self_
+  - local: default.yaml
+  - override hydra/launcher: joblib
+
+num_neighbor: 1
+dataset: MNIST
+seed: 1
+knn_data_folder: ${work_dir}/data/knn_results
+knn_data_path: ${work_dir}/data/knn_results/${dataset}_seed${seed}_${num_shot}shot.pt
+
+verbose: false
+
+hydra:
+  run:
+    dir: logs/experiments/knn_dataset
+  sweep:
+    dir: logs/experiments/knn_dataset
+    subdir: ${hydra.job.num}
+
+  launcher:
+    # override the number of jobs for joblib
+    n_jobs: 4

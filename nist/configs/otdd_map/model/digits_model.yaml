@@ -1,0 +1,31 @@
+defaults:
+  - default
+
+module:
+  _target_: src.models.digit_model.DigitModule
+
+# Currently, I use ddpm unet from Phil Wang -> Korotin conditional paper as my feature generator,
+# and the LeNet as the classifier (no label input)
+# and the discriminator from Generative OT paper -> Korotin resnet (with projection).
+T_net:
+  _target_: src.networks.unet_simple.Conditional_UNet
+
+classifier:
+  _target_: src.networks.classifier.SpinalNet
+
+f_net:
+  _target_: src.networks.resnet.ResNetDiscriminator
+  size: 32
+  nc: 3
+
+classifier_epoch: 1
+n_inner_iter: 10
+
+source: ${datamodule.source.dataset}
+target: ${datamodule.target.dataset}
+
+num_source_class: 10
+num_target_class: 10
+
+classifier_save_path: ${work_dir}/data/pretrain_classifier/${datamodule.target.dataset}_spinalnet_long.pt
+ema: True

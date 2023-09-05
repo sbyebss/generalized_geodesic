@@ -1,0 +1,13 @@
+# @package _global_
+
+experiment_mode: True
+
+# allows for custom naming of the experiment
+name: ???
+
+hydra:
+  run:
+    dir: logs/paper/${name}/${datamodule.source.dataset}/${datamodule.target.dataset}/${callbacks.w2_table.method}/${datamodule.num_shot}/seed${seed}
+  sweep:
+    dir: logs/paper/${name}/${datamodule.source.dataset}/${datamodule.target.dataset}/${callbacks.w2_table.method}/${datamodule.num_shot}
+    subdir: seed${seed}

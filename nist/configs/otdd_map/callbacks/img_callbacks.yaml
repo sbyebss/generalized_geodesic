@@ -1,0 +1,17 @@
+defaults:
+  - default.yaml
+
+visualization:
+  _target_: src.callbacks.img_callbacks.MapViz
+  log_interval: 500
+  source_dataset: ${datamodule.source.dataset}
+  map_path: ${work_dir}/logs/paper/${name}/${datamodule.source.dataset}/${datamodule.target.dataset}/${callbacks.w2_table.method}/seed${seed}/map_70_ema.pth
+
+w2_table:
+  method: Exact_origin
+  data_type: images
+  label_dist_path: ${work_dir}/data/otdd
+  seed: ${seed}
+
+model_checkpoint:
+  save_top_k: 1 # save k best models (determined by above metric)

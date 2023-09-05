@@ -1,0 +1,7 @@
+defaults:
+  - default.yaml
+
+w2_table:
+  method: Exact_origin
+  data_type: points
+  label_dist_path: ${work_dir}/data/otdd

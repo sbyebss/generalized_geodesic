@@ -1,0 +1,25 @@
+# python src/scripts/otdd_ternary.py source_dataset="MNIST" mapped_dataset="USPS" fine_tune_dataset="FMNIST" load_epoch=200 train_time_point=8
+defaults:
+  - default.yaml
+  - _self_
+  - local: default.yaml
+  - override hydra/launcher: joblib
+
+# seeds: [1]
+# load_epochs: [50, 50, 50, 35]
+# fine_tune_dataset: "EMNIST"
+# all_datasets: ["FMNIST", "MNIST", "USPS", "KMNIST", "EMNIST"]
+
+batch_size: 100
+ds_type: NIST # or VTAB
+
+hydra:
+  run:
+    dir: logs/otdd_ternary_transport_metric/${num_shot}_shot/external_${fine_tune_dataset}
+  sweep:
+    dir: logs/otdd_ternary_transport_metric/${num_shot}_shot
+    subdir: external_${fine_tune_dataset}
+
+  launcher:
+    # override the number of jobs for joblib
+    n_jobs: 4
